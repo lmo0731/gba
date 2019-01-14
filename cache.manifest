@@ -1,0 +1,16 @@
+CACHE MANIFEST
+# 2017-09-24 07:01:06.205352
+CACHE:
+# index.html
+# sha.txt
+gameplaycolor/src/images/icon-large.png
+gameplaycolor/icons/icon.png
+gameplaycolor/src/images/drive.png
+gameplaycolor/src/defaults/apple-touch-startup-image-1536x2008.png
+gameplaycolor/src/defaults/apple-touch-startup-image-1242x2148.png
+gameplaycolor/src/defaults/apple-touch-startup-image-640x1096.png
+gameplaycolor/src/defaults/apple-touch-startup-image-2048x1496.png
+gameplaycolor/src/defaults/apple-touch-startup-image-750x1294.png
+gameplaycolor/src/assets/silent.mp3
+NETWORK:
+*
