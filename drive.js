@@ -442,7 +442,7 @@
 
               var params = {
                 'maxResults': '100',
-                  'q': "(fullText contains '*.gba' or fullText contains '*.gbc') and trashed = false and mimeType = 'application/octet-stream'",
+                  'q': "(fullText contains '*.gba') and trashed = false and mimeType = 'application/octet-stream'",
                   "access_token": token
               };
 
@@ -460,7 +460,7 @@
                   if (result.nextPageToken) {
                     retrievePageOfFiles(result.nextPageToken);
                   } else {
-                    self.logging.info("Found " + files.length + " files");
+                    self.logging.info("Found " + files.length + " files ");
                     deferred.resolve(files);
                   }
 

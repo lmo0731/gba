@@ -102,25 +102,27 @@ function findValue(key) {
   return value;
 }
 
-function startWrapper(identifier, canvas, ROM) {
+
+gbaOnload(document.getElementById('LCD'));
+
+function startWrapper(identifier, ROM) {
   var deferred = jQuery.Deferred();
   loadSaveStateContext("game-" + identifier).then(function() {
     try {
-//      start(canvas, ROM, true);
       downloadFile("gba_bios.bin", registerBIOS);
-      gbaOnload(canvas);
-      
+      console.log("REGISTER BIOS SUCCESS");
       var byteNumbers = new Array(ROM.length);
       for (var i = 0; i < ROM.length; i++) {
         byteNumbers[i] = ROM.charCodeAt(i);
       }
-//      var byteArray = new Uint8Array(byteNumbers);
-//      var file = new Blob([byteArray], {type: 'application/octet-stream'});
-      
-      attachROM(byteNumbers);
-      
+      var byteArray = new Uint8Array(byteNumbers);
+      var file = new Blob([byteArray], {type: 'application/octet-stream'});
+      console.log(file);
+      attachROM(byteArray);
+      console.log("ATTACH ROM SUCCESS");
       deferred.resolve();
     } catch (e) {
+      console.log(e);
       deferred.reject(e);
     }
   });
@@ -180,17 +182,23 @@ function startWrapper(identifier, canvas, ROM) {
       var self = this;
       if (enabled === true) {
         settings[App.GameBoy.Settings.ENABLE_SOUND] = true;
-        IodineGUI.Iodine.enableAudio();
+        if (IodineGUI.Iodine){
+          IodineGUI.Iodine.enableAudio();
+        }
       } else {
         settings[App.GameBoy.Settings.ENABLE_SOUND] = false;
-        IodineGUI.Iodine.disableAudio();
+        if (IodineGUI.Iodine){
+          IodineGUI.Iodine.disableAudio();
+        }
       }
     },
 
     setSpeed: function(speed) {
       var self = this;
       self.speed = speed;
-      IodineGUI.Iodine.setSpeed(speed);
+      if (IodineGUI.Iodine){
+        IodineGUI.Iodine.setSpeed(speed);
+      }
     },
 
     onStateChange: function(callback) {
@@ -213,27 +221,35 @@ function startWrapper(identifier, canvas, ROM) {
 
     pause: function() {
       var self = this;
-      IodineGUI.Iodine.pause();
+      if (IodineGUI.Iodine){
+        IodineGUI.Iodine.pause();
+      }
     },
 
     run: function() {
       var self = this;
       // Do not attempt to run unless we have been in the running state.
       if (self.state === App.GameBoy.State.RUNNING) {
-        IodineGUI.Iodine.play();
+        if (IodineGUI.Iodine){
+          IodineGUI.Iodine.play();
+        }
       }
     },
 
     keyDown: function(keycode) {
       var self = this;
       alert(JSON.stringify({keycode: keycode, event: 'keyDown'}));
-      IodineGUI.Iodine.keyDown(keycode);
+      if (IodineGUI.Iodine){
+        IodineGUI.Iodine.keyDown(keycode);
+      }
     },
 
     keyUp: function(keycode) {
       var self = this;
       alert(JSON.stringify({keycode: keycode, event: 'keyUp'}));
-      IodineGUI.Iodine.keyUp(keycode);
+      if (IodineGUI.Iodine){
+        IodineGUI.Iodine.keyUp(keycode);
+      }
     },
 
     clear: function() {
@@ -247,6 +263,9 @@ function startWrapper(identifier, canvas, ROM) {
     reset: function() {
       var self = this;
       return self._insertCartridge(self.identifier, self.data);
+    },
+
+    save: function(){
     },
 
     load: function(identifier) {
@@ -273,10 +292,10 @@ function startWrapper(identifier, canvas, ROM) {
       var deferred = $.Deferred();
       self.identifier = identifier;
       self.data = data;
-      startWrapper(identifier, document.getElementById('LCD'), data).then(function() {
+      startWrapper(identifier, data).then(function() {
         setTimeout(function() {
-          
           self.setState(App.GameBoy.State.RUNNING);
+          console.log("SET STATE RUNNING SUCCESS");
           deferred.resolve();
         }, 100);
       }).fail(function(e) {
