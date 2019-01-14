@@ -1,7 +1,6 @@
 [submodule "gameplaycolor"]
 	path = gameplaycolor
-	url = git@github.com:gameplaycolor/gameplaycolor.git
-
-[submodule "IodineGB"]
-	path = IodineGB
-	url = git@github.com:taisel/IodineGBA.git
+	url = https://github.com/gameplaycolor/gameplaycolor
+[submodule "IodineGBA"]
+	path = IodineGBA
+	url = https://github.com/taisel/IodineGBA
