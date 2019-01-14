@@ -4,3 +4,6 @@
 [submodule "IodineGBA"]
 	path = IodineGBA
 	url = https://github.com/taisel/IodineGBA
+[submodule "XAudioJS"]
+	path = XAudioJS
+	url = https://github.com/taisel/XAudioJS.git

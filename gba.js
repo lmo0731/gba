@@ -18,15 +18,19 @@
 
 Gameboy = {};
 
+settings = [];
+
 Gameboy.Key = {
-  START: 7,
-  SELECT: 6,
-  A: 4,
-  B: 5,
-  UP: 2,
-  DOWN: 3,
-  LEFT: 1,
-  RIGHT: 0
+  START: 3,
+  SELECT: 2,
+  A: 0,
+  B: 1,
+  UP: 6,
+  DOWN: 7,
+  LEFT: 5,
+  RIGHT: 4,
+  R: 8,
+  L: 9
 };
 
 var gbologger = new App.Logging(window.config.logging_level, "gbo");
@@ -102,7 +106,19 @@ function startWrapper(identifier, canvas, ROM) {
   var deferred = jQuery.Deferred();
   loadSaveStateContext("game-" + identifier).then(function() {
     try {
-      start(canvas, ROM, true);
+//      start(canvas, ROM, true);
+      downloadFile("gba_bios.bin", registerBIOS);
+      gbaOnload(canvas);
+      
+      var byteNumbers = new Array(ROM.length);
+      for (var i = 0; i < ROM.length; i++) {
+        byteNumbers[i] = ROM.charCodeAt(i);
+      }
+//      var byteArray = new Uint8Array(byteNumbers);
+//      var file = new Blob([byteArray], {type: 'application/octet-stream'});
+      
+      attachROM(byteNumbers);
+      
       deferred.resolve();
     } catch (e) {
       deferred.reject(e);
@@ -164,23 +180,17 @@ function startWrapper(identifier, canvas, ROM) {
       var self = this;
       if (enabled === true) {
         settings[App.GameBoy.Settings.ENABLE_SOUND] = true;
-        if (gameboy) {
-          gameboy.initSound();
-        }
+        IodineGUI.Iodine.enableAudio();
       } else {
         settings[App.GameBoy.Settings.ENABLE_SOUND] = false;
-        if (gameboy) {
-          gameboy.stopSound();
-        }
+        IodineGUI.Iodine.disableAudio();
       }
     },
 
     setSpeed: function(speed) {
       var self = this;
       self.speed = speed;
-      if (gameboy) {
-        gameboy.setSpeed(speed);
-      }
+      IodineGUI.Iodine.setSpeed(speed);
     },
 
     onStateChange: function(callback) {
@@ -203,30 +213,33 @@ function startWrapper(identifier, canvas, ROM) {
 
     pause: function() {
       var self = this;
-      pause();
+      IodineGUI.Iodine.pause();
     },
 
     run: function() {
       var self = this;
       // Do not attempt to run unless we have been in the running state.
       if (self.state === App.GameBoy.State.RUNNING) {
-        run();
+        IodineGUI.Iodine.play();
       }
     },
 
     keyDown: function(keycode) {
       var self = this;
-      GameBoyJoyPadEvent(keycode, true);
+      alert(JSON.stringify({keycode: keycode, event: 'keyDown'}));
+      IodineGUI.Iodine.keyDown(keycode);
     },
 
     keyUp: function(keycode) {
       var self = this;
-      GameBoyJoyPadEvent(keycode, false);
+      alert(JSON.stringify({keycode: keycode, event: 'keyUp'}));
+      IodineGUI.Iodine.keyUp(keycode);
     },
 
     clear: function() {
       var self = this;
-      clearLastEmulation();
+//      clearLastEmulation();
+      
       self.data = undefined;
       self.setState(App.GameBoy.State.IDLE);
     },
@@ -262,9 +275,7 @@ function startWrapper(identifier, canvas, ROM) {
       self.data = data;
       startWrapper(identifier, document.getElementById('LCD'), data).then(function() {
         setTimeout(function() {
-          if (gameboy) {
-            gameboy.setSpeed(self.speed);
-          }
+          
           self.setState(App.GameBoy.State.RUNNING);
           deferred.resolve();
         }, 100);
