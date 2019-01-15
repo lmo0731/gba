@@ -204,7 +204,6 @@ Promise.prototype.always = function(onAlways) {
           self.store.setProperty(App.Controller.Domain.SETTINGS, App.Store.Property.GAME, identifier);
           self.consoleButton.setTitle(title);
           self.consoleButton.show();
-          console.log('CONSOLE BUTTON SHOW SUCCESS');
           self.console.show().then(function() {
             resolve();
           }, function(error) {

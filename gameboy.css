@@ -361,7 +361,7 @@ body {
 }
 
 .grape {
-    background-color: #27358B;
+    background-color: rgb(134,57,189);
 }
 
 .cherry {
@@ -581,7 +581,7 @@ body {
 }
 
 #console-color li.grape.selected, #console-color li.grape.pressed {
-    background-color: #27358B;
+    background-color: rgb(134,57,189);
 }
 
 #console-color li.cherry.selected, #console-color li.cherry.pressed {
@@ -640,7 +640,7 @@ body {
     border-radius: 40px;
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
     display: inline-block;
-    background-image: url(images/icon-large.png);
+    background-image: url(gameplaycolor/images/icon-large.png);
 }
 
 .apptitle {
@@ -682,7 +682,7 @@ hr {
 
 .sign-in-button {
     background-size: 24px 24px;
-    background-image: url(images/drive.png);
+    background-image: url(gameplaycolor/images/drive.png);
     background-repeat: no-repeat;
     padding-left: 36px;
     background-position: 20px center;

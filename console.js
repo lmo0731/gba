@@ -246,7 +246,6 @@ KEYCODE_SHIFT_LEFT = 16;
       show: function() {
         var self = this;
         return new Promise(function(resolve, reject) {
-            console.log(self.state);
 //          if (self.state != App.Console.State.VISIBLE) {
             window.tracker.track('console');
             self.state = App.Console.State.VISIBLE;

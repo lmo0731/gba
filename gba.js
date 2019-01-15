@@ -56,7 +56,6 @@ function loadSaveStateContext(context) {
 
     var deferred = new jQuery.Deferred();
     window.app.store.propertiesForDomain(saveStateContext, function (properties) {
-        console.log("SAVE STATE", properties);
         for (var key in properties) {
             if (properties.hasOwnProperty(key)) {
                 saveState[key] = properties[key];
@@ -106,20 +105,15 @@ function startWrapper(identifier, canvas, ROM) {
     loadSaveStateContext("game-" + identifier).then(function () {
         try {
             downloadFile("gba_bios.bin", registerBIOS);
-            console.log("REGISTER BIOS SUCCESS");
             var byteNumbers = new Array(ROM.length);
             for (var i = 0; i < ROM.length; i++) {
                 byteNumbers[i] = ROM.charCodeAt(i);
             }
             var byteArray = new Uint8Array(byteNumbers);
-            var file = new Blob([byteArray], {type: 'application/octet-stream'});
-            console.log(file);
+//            var file = new Blob([byteArray], {type: 'application/octet-stream'});
             attachROM(byteArray);
-            console.log("ATTACH ROM SUCCESS");
-//            throw new Error('Attach rom');
             deferred.resolve();
         } catch (e) {
-            console.log(e);
             deferred.reject(e);
         }
     });
@@ -176,7 +170,6 @@ function startWrapper(identifier, canvas, ROM) {
         },
 
         setSoundEnabled: function (enabled) {
-            console.log('SOUND', enabled);
             var self = this;
             if (enabled === true) {
                 settings[App.GameBoy.Settings.ENABLE_SOUND] = true;
@@ -192,7 +185,6 @@ function startWrapper(identifier, canvas, ROM) {
         },
 
         setSpeed: function (speed) {
-            console.log('SPEED', speed);
             var self = this;
             self.speed = speed;
             if (Iodine) {
@@ -201,13 +193,11 @@ function startWrapper(identifier, canvas, ROM) {
         },
 
         onStateChange: function (callback) {
-            console.log('STATE CHANGED', self.state);
             var self = this;
             self.stateChangeCallbacks.push(callback);
         },
 
         setState: function (state) {
-            console.log('STATE', state);
             var self = this;
             if (self.state !== state) {
                 self.state = state;
@@ -221,7 +211,6 @@ function startWrapper(identifier, canvas, ROM) {
         },
 
         pause: function () {
-            console.log('PAUSE');
             var self = this;
             if (Iodine) {
                 Iodine.pause();
@@ -229,7 +218,6 @@ function startWrapper(identifier, canvas, ROM) {
         },
 
         run: function () {
-            console.log('PLAY');
             var self = this;
             // Do not attempt to run unless we have been in the running state.
             if (self.state === App.GameBoy.State.RUNNING) {
@@ -240,26 +228,20 @@ function startWrapper(identifier, canvas, ROM) {
         },
 
         keyDown: function (keycode) {
-            console.log('KEYDOWN', keycode);
             var self = this;
-//      alert(JSON.stringify({keycode: keycode, event: 'keyDown'}));
             if (Iodine) {
                 Iodine.keyDown(keycode);
             }
         },
 
         keyUp: function (keycode) {
-            console.log('KEYUP', keycode);
             var self = this;
-//      alert(JSON.stringify({keycode: keycode, event: 'keyUp'}));
             if (Iodine) {
                 Iodine.keyUp(keycode);
             }
         },
 
         clear: function () {
-
-            console.log('CLEAR');
             var self = this;
 //      clearLastEmulation();
 
@@ -268,19 +250,14 @@ function startWrapper(identifier, canvas, ROM) {
         },
 
         reset: function () {
-            console.log('RESET');
             var self = this;
             return self._insertCartridge(self.identifier, self.data);
         },
 
         save: function () {
-
-            console.log('SAVE');
         },
 
         load: function (identifier) {
-
-            console.log('LOAD', identifier);
             var self = this;
             var deferred = $.Deferred();
 
@@ -300,7 +277,6 @@ function startWrapper(identifier, canvas, ROM) {
         },
 
         _insertCartridge: function (identifier, data) {
-            console.log('CART', identifier);
             var self = this;
             var deferred = $.Deferred();
             self.identifier = identifier;
@@ -308,7 +284,6 @@ function startWrapper(identifier, canvas, ROM) {
             startWrapper(identifier, document.getElementById("LCD"), data).then(function () {
                 setTimeout(function () {
                     self.setState(App.GameBoy.State.RUNNING);
-                    console.log("SET STATE RUNNING SUCCESS");
                     deferred.resolve();
                 }, 100);
             }).fail(function (e) {
