@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# 2019-01-16 03:14:06.205352
+# 2019-01-16 03:22:06.205352
 CACHE:
 index.html
 gameplaycolor/css/menu.css
@@ -103,5 +103,6 @@ gameplaycolor/js/touchlistener.js
 gameplaycolor/js/device.js
 gameplaycolor/js/tracker.js
 drive.js
+gba_bios.bin
 NETWORK:
 *
