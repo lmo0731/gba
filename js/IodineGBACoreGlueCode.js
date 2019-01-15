@@ -21,7 +21,7 @@ var Mixer = null;
 var MixerInput = null;
 var timerID = null;
 window.onload = function () {
-    
+
     //Initialize Iodine:
     Iodine = new GameBoyAdvanceEmulator();
     //Initialize the graphics:
@@ -55,7 +55,9 @@ function registerBlitterHandler() {
     Blitter = new GlueCodeGfx();
     Blitter.attachCanvas(document.getElementById("LCD"));
     Blitter.setSmoothScaling(false);
-    Iodine.attachGraphicsFrameHandler(function (buffer) {Blitter.copyBuffer(buffer);});
+    Iodine.attachGraphicsFrameHandler(function (buffer) {
+        Blitter.copyBuffer(buffer);
+    });
 }
 function registerAudioHandler() {
     Mixer = new GlueCodeMixer();
@@ -76,7 +78,6 @@ function raiseVolume() {
     Iodine.incrementVolume(0.04);
 }
 function writeRedTemporaryText(textString) {
-    alert(textString);
     if (timerID) {
         clearTimeout(timerID);
     }
@@ -93,18 +94,16 @@ function clearTempString() {
 }
 //Some wrappers and extensions for non-DOM3 browsers:
 function addEvent(sEvent, oElement, fListener) {
-    try {    
+    try {
         oElement.addEventListener(sEvent, fListener, false);
-    }
-    catch (error) {
+    } catch (error) {
         oElement.attachEvent("on" + sEvent, fListener);    //Pity for IE.
     }
 }
 function removeEvent(sEvent, oElement, fListener) {
-    try {    
+    try {
         oElement.removeEventListener(sEvent, fListener, false);
-    }
-    catch (error) {
+    } catch (error) {
         oElement.detachEvent("on" + sEvent, fListener);    //Pity for IE.
     }
 }
