@@ -57,7 +57,7 @@ Promise.prototype.always = function(onAlways) {
     init: function (device) {
       var self = this;
 
-      self.store = new App.Store('save-state', 100);
+      self.store = new App.Store('save-state', 50);
       if (!self.store.open()) {
         alert("Unable to create database.\nPlease accept increased storage size when asked.");
         return;
