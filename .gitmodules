@@ -7,3 +7,7 @@
 [submodule "XAudioJS"]
 	path = XAudioJS
 	url = https://github.com/taisel/XAudioJS.git
+[submodule "GameBoy-Online"]
+	path = gameplaycolor/cores/GameBoy-Online
+	url = https://github.com/jbmorley/GameBoy-Online
+	
