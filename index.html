@@ -50,66 +50,61 @@
 
         <script type="text/javascript" src="gameplaycolor/src/js/jquery-1.8.2.min.js"></script>
 
-        <script src="IodineGBA/IodineGBA/includes/TypedArrayShim.js"></script>
-        <script src="IodineGBA/IodineGBA/core/Cartridge.js"></script>
-        <script src="IodineGBA/IodineGBA/core/DMA.js"></script>
-        <script src="IodineGBA/IodineGBA/core/Emulator.js"></script>
-        <script src="IodineGBA/IodineGBA/core/Graphics.js"></script>
-        <script src="IodineGBA/IodineGBA/core/RunLoop.js"></script>
-        <script src="IodineGBA/IodineGBA/core/Memory.js"></script>
-        <script src="IodineGBA/IodineGBA/core/IRQ.js"></script>
-        <script src="IodineGBA/IodineGBA/core/JoyPad.js"></script>
-        <script src="IodineGBA/IodineGBA/core/Serial.js"></script>
-        <script src="IodineGBA/IodineGBA/core/Sound.js"></script>
-        <script src="IodineGBA/IodineGBA/core/Timer.js"></script>
-        <script src="IodineGBA/IodineGBA/core/Wait.js"></script>
-        <script src="IodineGBA/IodineGBA/core/CPU.js"></script>
-        <script src="IodineGBA/IodineGBA/core/Saves.js"></script>
-        <script src="IodineGBA/IodineGBA/core/sound/FIFO.js"></script>
-        <script src="IodineGBA/IodineGBA/core/sound/Channel1.js"></script>
-        <script src="IodineGBA/IodineGBA/core/sound/Channel2.js"></script>
-        <script src="IodineGBA/IodineGBA/core/sound/Channel3.js"></script>
-        <script src="IodineGBA/IodineGBA/core/sound/Channel4.js"></script>
-        <script src="IodineGBA/IodineGBA/core/CPU/ARM.js"></script>
-        <script src="IodineGBA/IodineGBA/core/CPU/THUMB.js"></script>
-        <script src="IodineGBA/IodineGBA/core/CPU/CPSR.js"></script>
-        <script src="IodineGBA/IodineGBA/core/graphics/Renderer.js"></script>
-        <script src="IodineGBA/IodineGBA/core/graphics/RendererShim.js"></script>
-        <script src="IodineGBA/IodineGBA/core/graphics/RendererProxy.js"></script>
-        <script src="IodineGBA/IodineGBA/core/graphics/BGTEXT.js"></script>
-        <script src="IodineGBA/IodineGBA/core/graphics/BG2FrameBuffer.js"></script>
-        <script src="IodineGBA/IodineGBA/core/graphics/BGMatrix.js"></script>
-        <script src="IodineGBA/IodineGBA/core/graphics/AffineBG.js"></script>
-        <script src="IodineGBA/IodineGBA/core/graphics/ColorEffects.js"></script>
-        <script src="IodineGBA/IodineGBA/core/graphics/Mosaic.js"></script>
-        <script src="IodineGBA/IodineGBA/core/graphics/OBJ.js"></script>
-        <script src="IodineGBA/IodineGBA/core/graphics/OBJWindow.js"></script>
-        <script src="IodineGBA/IodineGBA/core/graphics/Window.js"></script>
-        <script src="IodineGBA/IodineGBA/core/graphics/Compositor.js"></script>
-        <script src="IodineGBA/IodineGBA/core/memory/DMA0.js"></script>
-        <script src="IodineGBA/IodineGBA/core/memory/DMA1.js"></script>
-        <script src="IodineGBA/IodineGBA/core/memory/DMA2.js"></script>
-        <script src="IodineGBA/IodineGBA/core/memory/DMA3.js"></script>
-        <script src="IodineGBA/IodineGBA/core/cartridge/SaveDeterminer.js"></script>
-        <script src="IodineGBA/IodineGBA/core/cartridge/SRAM.js"></script>
-        <script src="IodineGBA/IodineGBA/core/cartridge/FLASH.js"></script>
-        <script src="IodineGBA/IodineGBA/core/cartridge/EEPROM.js"></script>
-        <script src="IodineGBA/IodineGBA/core/cartridge/GPIO.js"></script>
+        <script src="IodineGBA/includes/TypedArrayShim.js"></script>
+        <script src="IodineGBA/core/Cartridge.js"></script>
+        <script src="IodineGBA/core/DMA.js"></script>
+        <script src="IodineGBA/core/Emulator.js"></script>
+        <script src="IodineGBA/core/Graphics.js"></script>
+        <script src="IodineGBA/core/RunLoop.js"></script>
+        <script src="IodineGBA/core/Memory.js"></script>
+        <script src="IodineGBA/core/IRQ.js"></script>
+        <script src="IodineGBA/core/JoyPad.js"></script>
+        <script src="IodineGBA/core/Serial.js"></script>
+        <script src="IodineGBA/core/Sound.js"></script>
+        <script src="IodineGBA/core/Timer.js"></script>
+        <script src="IodineGBA/core/Wait.js"></script>
+        <script src="IodineGBA/core/CPU.js"></script>
+        <script src="IodineGBA/core/Saves.js"></script>
+        <script src="IodineGBA/core/sound/FIFO.js"></script>
+        <script src="IodineGBA/core/sound/Channel1.js"></script>
+        <script src="IodineGBA/core/sound/Channel2.js"></script>
+        <script src="IodineGBA/core/sound/Channel3.js"></script>
+        <script src="IodineGBA/core/sound/Channel4.js"></script>
+        <script src="IodineGBA/core/CPU/ARM.js"></script>
+        <script src="IodineGBA/core/CPU/THUMB.js"></script>
+        <script src="IodineGBA/core/CPU/CPSR.js"></script>
+        <script src="IodineGBA/core/graphics/Renderer.js"></script>
+        <script src="IodineGBA/core/graphics/RendererProxy.js"></script>
+        <script src="IodineGBA/core/graphics/BGTEXT.js"></script>
+        <script src="IodineGBA/core/graphics/BG2FrameBuffer.js"></script>
+        <script src="IodineGBA/core/graphics/BGMatrix.js"></script>
+        <script src="IodineGBA/core/graphics/AffineBG.js"></script>
+        <script src="IodineGBA/core/graphics/ColorEffects.js"></script>
+        <script src="IodineGBA/core/graphics/Mosaic.js"></script>
+        <script src="IodineGBA/core/graphics/OBJ.js"></script>
+        <script src="IodineGBA/core/graphics/OBJWindow.js"></script>
+        <script src="IodineGBA/core/graphics/Window.js"></script>
+        <script src="IodineGBA/core/graphics/Compositor.js"></script>
+        <script src="IodineGBA/core/memory/DMA0.js"></script>
+        <script src="IodineGBA/core/memory/DMA1.js"></script>
+        <script src="IodineGBA/core/memory/DMA2.js"></script>
+        <script src="IodineGBA/core/memory/DMA3.js"></script>
+        <script src="IodineGBA/core/cartridge/SaveDeterminer.js"></script>
+        <script src="IodineGBA/core/cartridge/SRAM.js"></script>
+        <script src="IodineGBA/core/cartridge/FLASH.js"></script>
+        <script src="IodineGBA/core/cartridge/EEPROM.js"></script>
+
+        <script src="js/XAudioJS/swfobject.js"></script>
+        <script src="js/XAudioJS/resampler.js"></script>
+        <script src="js/XAudioJS/XAudioServer.js"></script>
 
         <!--Add your webpage scripts below-->
-        <script src="IodineGBA/user_scripts/AudioGlueCode.js"></script>
-        <script src="IodineGBA/user_scripts/base64.js"></script>
-        <script src="CoreGlueCode.js"></script>
-        <script src="IodineGBA/user_scripts/GfxGlueCode.js"></script>
-        <script src="GUIGlueCode.js"></script>
-        <script src="IodineGBA/user_scripts/JoyPadGlueCode.js"></script>
-        <script src="IodineGBA/user_scripts/ROMLoadGlueCode.js"></script>
-        <script src="IodineGBA/user_scripts/SavesGlueCode.js"></script>
-        <script src="IodineGBA/user_scripts/WorkerGfxGlueCode.js"></script>
-        <script src="IodineGBA/user_scripts/WorkerGlueCode.js"></script>
-        <script src="XAudioJS/swfobject.js"></script>
-        <script src="XAudioJS/resampler.js"></script>
-        <script src="XAudioJS/XAudioServer.js"></script>
+        <script src="js/IodineGBAROMLoadGlueCode.js"></script>
+        <script src="js/IodineGBAJoyPadGlueCode.js"></script>
+        <script src="js/IodineGBASavesGlueCode.js"></script>
+        <script src="js/IodineGBAGraphicsGlueCode.js"></script>
+        <script src="js/IodineGBAAudioGlueCode.js"></script>
+        <script src="js/IodineGBACoreGlueCode.js"></script>
 
         <script type="text/javascript" src="config.js"></script>
         <script type="text/javascript" src="gameplaycolor/src/js/spin.min.js"></script>
@@ -117,7 +112,7 @@
         <script type="text/javascript" src="app.js"></script>
         <script type="text/javascript" src="gameplaycolor/src/js/logging.js"></script>
         <script type="text/javascript" src="gameplaycolor/src/js/control.js"></script>
-        <script type="text/javascript" src="gameplaycolor/src/js/console.js"></script>
+        <script type="text/javascript" src="console.js"></script>
         <script type="text/javascript" src="library.js"></script>
         <script type="text/javascript" src="gameplaycolor/src/js/games.js"></script>
         <script type="text/javascript" src="gameplaycolor/src/js/pad.js"></script>
@@ -131,7 +126,7 @@
         <script type="text/javascript" src="gba.js"></script>
         <script type="text/javascript" src="gameplaycolor/src/js/grid.js"></script>
         <script type="text/javascript" src="gameplaycolor/src/js/store.js"></script>
-        <script type="text/javascript" src="touchlistener.js"></script>
+        <script type="text/javascript" src="gameplaycolor/src/js/touchlistener.js"></script>
         <script type="text/javascript" src="gameplaycolor/src/js/device.js"></script>
         <script type="text/javascript" src="gameplaycolor/src/js/tracker.js"></script>
         <script type="text/javascript" src="drive.js"></script>
@@ -144,9 +139,9 @@
 
         <div id="gameboy">
 
-            <div class="screen-games-background" />
+            <div class="screen-games-background" ></div>
             <div id="screen-games">
-                <div id="list-games" class="content" />
+                <div id="list-games" class="content" ></div>
                 <div id="screen-loading" class="content screen" style="display: none">
                     <div class="placeholder">
                         <p>Loading&hellip;</p>
@@ -352,12 +347,12 @@
                 <div class="appicon"></div>
                 <p>Copy and paste the access code into <strong>Game Play Color</strong> then click <strong>Continue</strong>.</p>
                 <textarea readonly="yes" rows="6" id="authorization-code" class="authorization-code" type="text" onFocus="this.selectionStart = 0;
-                        this.selectionEnd = this.value.length;" onTouchEnd="this.selectionStart=0; this.selectionEnd=this.value.length;" onMouseUp="return false" />
+                    this.selectionEnd = this.value.length;" onTouchEnd="this.selectionStart=0; this.selectionEnd=this.value.length;" onMouseUp="return false" ></textarea>
             </div>
         </div>
 
         <audio id="silent">
-            <source src="gameplaycolor/src/assets/silent.mp3" type="audio/mpeg"/>
+            <source src="gameplaycolor/src/assets/silent.mp3" type="audio/mpeg">
         </audio>
 
 

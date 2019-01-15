@@ -14,4 +14,4 @@ var config = {
     }
 }
 
-var setting = []
+settings = [];

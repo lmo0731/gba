@@ -18,19 +18,17 @@
 
 Gameboy = {};
 
-settings = [];
-
 Gameboy.Key = {
-  START: 3,
-  SELECT: 2,
-  A: 0,
-  B: 1,
-  UP: 6,
-  DOWN: 7,
-  LEFT: 5,
-  RIGHT: 4,
-  R: 8,
-  L: 9
+    START: 3,
+    SELECT: 2,
+    A: 0,
+    B: 1,
+    UP: 6,
+    DOWN: 7,
+    LEFT: 5,
+    RIGHT: 4,
+    R: 8,
+    L: 9
 };
 
 var gbologger = new App.Logging(window.config.logging_level, "gbo");
@@ -38,288 +36,287 @@ var saveStateContext;
 var saveState = {};
 
 function cout(message, level) {
-  var l = App.Logging.Level.INFO;
-  if (level === 0) {
-    l = App.Logging.Level.DEBUG;
-  } else if (level === 1) {
-    l = App.Logging.Level.INFO;
-  } else if (level === 2) {
-    l = App.Logging.Level.WARNING;
-  } else {
-    l = App.Logging.Level.ERROR;
-  }
-  gbologger.log(l, message);
+    var l = App.Logging.Level.INFO;
+    if (level === 0) {
+        l = App.Logging.Level.DEBUG;
+    } else if (level === 1) {
+        l = App.Logging.Level.INFO;
+    } else if (level === 2) {
+        l = App.Logging.Level.WARNING;
+    } else {
+        l = App.Logging.Level.ERROR;
+    }
+    gbologger.log(l, message);
 }
 
 function loadSaveStateContext(context) {
 
-  saveStateContext = context;
-  saveState = {};
+    saveStateContext = context;
+    saveState = {};
 
-  var deferred = new jQuery.Deferred();
-  window.app.store.propertiesForDomain(saveStateContext, function(properties) {
+    var deferred = new jQuery.Deferred();
+    window.app.store.propertiesForDomain(saveStateContext, function (properties) {
+        console.log("SAVE STATE", properties);
+        for (var key in properties) {
+            if (properties.hasOwnProperty(key)) {
+                saveState[key] = properties[key];
+            }
+        }
 
-    for (var key in properties) {
-      if (properties.hasOwnProperty(key)) {
-        saveState[key] = properties[key];
-      }
-    }
-
-    deferred.resolve();
-  });
-  return deferred.promise();
+        deferred.resolve();
+    });
+    return deferred.promise();
 }
 
 function setValue(key, value) {
 
-  // JSON-encode the RTC as this cannot be stored in its default form.
-  if (key.substring(0, 4) === "RTC_") {
-    value = JSON.stringify(value);
-  }
+    // JSON-encode the RTC as this cannot be stored in its default form.
+    if (key.substring(0, 4) === "RTC_") {
+        value = JSON.stringify(value);
+    }
 
-  var previous = saveState[key];
-  if (previous !== value) {
-    saveState[key] = value;
-    window.app.setValue(saveStateContext, key, value);
-  }
+    var previous = saveState[key];
+    if (previous !== value) {
+        saveState[key] = value;
+        window.app.setValue(saveStateContext, key, value);
+    }
 
 }
 
 function deleteValue(key) {
-  delete saveState[key];
-  window.app.deleteValue(saveStateContext, key);
+    delete saveState[key];
+    window.app.deleteValue(saveStateContext, key);
 }
 
 function findValue(key) {
 
-  var value = saveState[key];
+    var value = saveState[key];
 
-  // JSON-decode the RTC.
-  if (value !== undefined && key.substring(0, 4) === "RTC_") {
-    value = JSON.parse(value);
-  }
+    // JSON-decode the RTC.
+    if (value !== undefined && key.substring(0, 4) === "RTC_") {
+        value = JSON.parse(value);
+    }
 
-  return value;
+    return value;
 }
 
 
 function startWrapper(identifier, canvas, ROM) {
-  var deferred = jQuery.Deferred();
-  loadSaveStateContext("game-" + identifier).then(function() {
-    try {
-      gbaOnload(canvas);
-      downloadFile("gba_bios.bin", registerBIOS);
-      console.log("REGISTER BIOS SUCCESS");
-      var byteNumbers = new Array(ROM.length);
-      for (var i = 0; i < ROM.length; i++) {
-        byteNumbers[i] = ROM.charCodeAt(i);
-      }
-      var byteArray = new Uint8Array(byteNumbers);
-      var file = new Blob([byteArray], {type: 'application/octet-stream'});
-      console.log(file);
-      attachROM(byteArray);
-      console.log("ATTACH ROM SUCCESS");
-      deferred.resolve();
-    } catch (e) {
-      console.log(e);
-      deferred.reject(e);
-    }
-  });
-  return deferred.promise();
+    var deferred = jQuery.Deferred();
+    loadSaveStateContext("game-" + identifier).then(function () {
+        try {
+            downloadFile("gba_bios.bin", registerBIOS);
+            console.log("REGISTER BIOS SUCCESS");
+            var byteNumbers = new Array(ROM.length);
+            for (var i = 0; i < ROM.length; i++) {
+                byteNumbers[i] = ROM.charCodeAt(i);
+            }
+            var byteArray = new Uint8Array(byteNumbers);
+            var file = new Blob([byteArray], {type: 'application/octet-stream'});
+            console.log(file);
+            attachROM(byteArray);
+            console.log("ATTACH ROM SUCCESS");
+//            throw new Error('Attach rom');
+            deferred.resolve();
+        } catch (e) {
+            console.log(e);
+            deferred.reject(e);
+        }
+    });
+    return deferred.promise();
 }
 
-(function($) {
+(function ($) {
 
-  App.GameBoy = function(store, library) {
-    this.init(store, library);
-  };
+    App.GameBoy = function (store, library) {
+        this.init(store, library);
+    };
 
-  App.GameBoy.Settings = {
-    ENABLE_SOUND:           0, // (defaults to true)
-    ENABLE_GBC_BIOS:        1, // Boot with boot rom first (defaults to true)
-    DISABLE_COLORS:         2, // Priority to game boy mode (defaults to false)
-    VOLUME_LEVEL:           3, // Volume (defaults to 1)
-    ENABLE_COLORIZATION:    4, // Colorize the game boy mode (defaults to true)
-    TYPED_ARRAYS_DISALLOW:  5, // Disallow typed arrays (defaults to false)
-    EMULATOR_LOOP_INTERVAL: 6, // Interval for the emulator loop (defaults to 4)
-    AUDIO_BUFFER_MIN_SPAN:  7, // (defaults to 15)
-    AUDIO_BUFFER_MAX_SPAN:  8, // (defaults to 30)
-    ROM_ONLY_OVERRIDE:      9, // Override to allow for MBC1 instead of ROM only (defaults to false)
-    MBC_ENABLE_OVERRIDE:    10, // Override MBC RAM disabling and always allow reading and writing to the banks (defaults to false)
-    GB_BOOT_ROM_UTILIZED:   11, // Use the GameBoy boot ROM instead of the GameBoy Color boot ROM (defaults to false)
-    SOFTWARE_RESIZING:      12, // Scale the canvas in JS, or let the browser scale the canvas (defaults to false)
-    RESIZE_SMOOTHING:       13 // Use image smoothing based scaling (defaults to true)
-  };
+    App.GameBoy.Settings = {
+        ENABLE_SOUND: 0, // (defaults to true)
+        ENABLE_GBC_BIOS: 1, // Boot with boot rom first (defaults to true)
+        DISABLE_COLORS: 2, // Priority to game boy mode (defaults to false)
+        VOLUME_LEVEL: 3, // Volume (defaults to 1)
+        ENABLE_COLORIZATION: 4, // Colorize the game boy mode (defaults to true)
+        TYPED_ARRAYS_DISALLOW: 5, // Disallow typed arrays (defaults to false)
+        EMULATOR_LOOP_INTERVAL: 6, // Interval for the emulator loop (defaults to 4)
+        AUDIO_BUFFER_MIN_SPAN: 7, // (defaults to 15)
+        AUDIO_BUFFER_MAX_SPAN: 8, // (defaults to 30)
+        ROM_ONLY_OVERRIDE: 9, // Override to allow for MBC1 instead of ROM only (defaults to false)
+        MBC_ENABLE_OVERRIDE: 10, // Override MBC RAM disabling and always allow reading and writing to the banks (defaults to false)
+        GB_BOOT_ROM_UTILIZED: 11, // Use the GameBoy boot ROM instead of the GameBoy Color boot ROM (defaults to false)
+        SOFTWARE_RESIZING: 12, // Scale the canvas in JS, or let the browser scale the canvas (defaults to false)
+        RESIZE_SMOOTHING: 13 // Use image smoothing based scaling (defaults to true)
+    };
 
-  App.GameBoy.State = {
-    IDLE: 0,
-    LOADING: 1,
-    RUNNING: 2,
-    ERROR: 3
-  };
+    App.GameBoy.State = {
+        IDLE: 0,
+        LOADING: 1,
+        RUNNING: 2,
+        ERROR: 3
+    };
 
-  jQuery.extend(App.GameBoy.prototype, {
-        
-    init: function(store, library) {
-      var self = this;
-      self.store = store;
-      self.library = library;
-      self.state = App.GameBoy.State.IDLE;
-      self.stateChangeCallbacks = [];
-      self.logging = new App.Logging(window.config.logging_level, "gameboy");
-      self.speed = 1;
+    jQuery.extend(App.GameBoy.prototype, {
 
-      settings[App.GameBoy.Settings.ENABLE_SOUND] = true;
-      settings[App.GameBoy.Settings.ENABLE_COLORIZATION] = false;
-      settings[App.GameBoy.Settings.SOFTWARE_RESIZING] = false;
-      settings[App.GameBoy.Settings.RESIZE_SMOOTHING] = false;
-      settings[App.GameBoy.Settings.EMULATOR_LOOP_INTERVAL] = 12;
+        init: function (store, library) {
+            var self = this;
+            self.store = store;
+            self.library = library;
+            self.state = App.GameBoy.State.IDLE;
+            self.stateChangeCallbacks = [];
+            self.logging = new App.Logging(window.config.logging_level, "gameboy");
+            self.speed = 1;
 
-    },
+            settings[App.GameBoy.Settings.ENABLE_SOUND] = true;
+            settings[App.GameBoy.Settings.ENABLE_COLORIZATION] = false;
+            settings[App.GameBoy.Settings.SOFTWARE_RESIZING] = false;
+            settings[App.GameBoy.Settings.RESIZE_SMOOTHING] = false;
+            settings[App.GameBoy.Settings.EMULATOR_LOOP_INTERVAL] = 12;
 
-    setSoundEnabled: function(enabled) {
-        console.log('SOUND', enabled);
-      var self = this;
-      if (enabled === true) {
-        settings[App.GameBoy.Settings.ENABLE_SOUND] = true;
-        if (IodineGUI.Iodine){
-          IodineGUI.Iodine.enableAudio();
-        }
-      } else {
-        settings[App.GameBoy.Settings.ENABLE_SOUND] = false;
-        if (IodineGUI.Iodine){
-          IodineGUI.Iodine.disableAudio();
-        }
-      }
-    },
+        },
 
-    setSpeed: function(speed) {
-        console.log('SPEED', enabled);
-      var self = this;
-      self.speed = speed;
-      if (IodineGUI.Iodine){
-        IodineGUI.Iodine.setSpeed(speed);
-      }
-    },
+        setSoundEnabled: function (enabled) {
+            console.log('SOUND', enabled);
+            var self = this;
+            if (enabled === true) {
+                settings[App.GameBoy.Settings.ENABLE_SOUND] = true;
+                if (Iodine) {
+                    Iodine.enableAudio();
+                }
+            } else {
+                settings[App.GameBoy.Settings.ENABLE_SOUND] = false;
+                if (Iodine) {
+                    Iodine.disableAudio();
+                }
+            }
+        },
 
-    onStateChange: function(callback) {
-        console.log('STATE CHANGED', self.state);
-      var self = this;
-      self.stateChangeCallbacks.push(callback);
-    },
+        setSpeed: function (speed) {
+            console.log('SPEED', speed);
+            var self = this;
+            self.speed = speed;
+            if (Iodine) {
+                Iodine.setSpeed(speed);
+            }
+        },
 
-    setState: function(state) {
-        console.log('STATE', state);
-      var self = this;
-      if (self.state !== state) {
-        self.state = state;
+        onStateChange: function (callback) {
+            console.log('STATE CHANGED', self.state);
+            var self = this;
+            self.stateChangeCallbacks.push(callback);
+        },
 
-        // Fire the state change callbacks.
-        for (var i = 0; i < self.stateChangeCallbacks.length; i++) {
-          var callback = self.stateChangeCallbacks[i];
-          callback(state);
-        }
-      }
-    },
+        setState: function (state) {
+            console.log('STATE', state);
+            var self = this;
+            if (self.state !== state) {
+                self.state = state;
 
-    pause: function() {
-        throw new Error();
-        console.log('PAUSE');
-      var self = this;
-      if (IodineGUI.Iodine){
-        IodineGUI.Iodine.pause();
-      }
-    },
+                // Fire the state change callbacks.
+                for (var i = 0; i < self.stateChangeCallbacks.length; i++) {
+                    var callback = self.stateChangeCallbacks[i];
+                    callback(state);
+                }
+            }
+        },
 
-    run: function() {
-        console.log('PLAY');
-      var self = this;
-      // Do not attempt to run unless we have been in the running state.
-      if (self.state === App.GameBoy.State.RUNNING) {
-        if (IodineGUI.Iodine){
-          IodineGUI.Iodine.play();
-        }
-      }
-    },
+        pause: function () {
+            console.log('PAUSE');
+            var self = this;
+            if (Iodine) {
+                Iodine.pause();
+            }
+        },
 
-    keyDown: function(keycode) {
-        console.log('KEYDOWN', keycode);
-      var self = this;
+        run: function () {
+            console.log('PLAY');
+            var self = this;
+            // Do not attempt to run unless we have been in the running state.
+            if (self.state === App.GameBoy.State.RUNNING) {
+                if (Iodine) {
+                    Iodine.play();
+                }
+            }
+        },
+
+        keyDown: function (keycode) {
+            console.log('KEYDOWN', keycode);
+            var self = this;
 //      alert(JSON.stringify({keycode: keycode, event: 'keyDown'}));
-      if (IodineGUI.Iodine){
-        IodineGUI.Iodine.keyDown(keycode);
-      }
-    },
+            if (Iodine) {
+                Iodine.keyDown(keycode);
+            }
+        },
 
-    keyUp: function(keycode) {
-        console.log('KEYUP', keycode);
-      var self = this;
+        keyUp: function (keycode) {
+            console.log('KEYUP', keycode);
+            var self = this;
 //      alert(JSON.stringify({keycode: keycode, event: 'keyUp'}));
-      if (IodineGUI.Iodine){
-        IodineGUI.Iodine.keyUp(keycode);
-      }
-    },
+            if (Iodine) {
+                Iodine.keyUp(keycode);
+            }
+        },
 
-    clear: function() {
-        
-        console.log('CLEAR');
-      var self = this;
+        clear: function () {
+
+            console.log('CLEAR');
+            var self = this;
 //      clearLastEmulation();
-      
-      self.data = undefined;
-      self.setState(App.GameBoy.State.IDLE);
-    },
 
-    reset: function() {
-        console.log('RESET');
-      var self = this;
-      return self._insertCartridge(self.identifier, self.data);
-    },
+            self.data = undefined;
+            self.setState(App.GameBoy.State.IDLE);
+        },
 
-    save: function(){
-        
-        console.log('SAVE');
-    },
+        reset: function () {
+            console.log('RESET');
+            var self = this;
+            return self._insertCartridge(self.identifier, self.data);
+        },
 
-    load: function(identifier) {
-        
-        console.log('LOAD', identifier);
-      var self = this;
-      var deferred = $.Deferred();
+        save: function () {
 
-      var resetStateAndReject = function(e) {
-        self.logging.warning("Unable to load game");
-        self.setState(App.GameBoy.State.IDLE);
-        deferred.reject(e);
-      };
+            console.log('SAVE');
+        },
 
-      self.library.fetch(identifier).then(function(data) {
-        self._insertCartridge(identifier, data).then(function() {
-          deferred.resolve();
-        }).fail(resetStateAndReject);
-      }).fail(resetStateAndReject);
+        load: function (identifier) {
 
-      return deferred.promise();
-    },
+            console.log('LOAD', identifier);
+            var self = this;
+            var deferred = $.Deferred();
 
-    _insertCartridge: function(identifier, data) {
-        console.log('CART', identifier);
-      var self = this;
-      var deferred = $.Deferred();
-      self.identifier = identifier;
-      self.data = data;
-      startWrapper(identifier, document.getElementById("LCD"), data).then(function() {
-        setTimeout(function() {
-          self.setState(App.GameBoy.State.RUNNING);
-          console.log("SET STATE RUNNING SUCCESS");
-          deferred.resolve();
-        }, 100);
-      }).fail(function(e) {
-        deferred.reject(e);
-      });
-      return deferred.promise();
-    }
+            var resetStateAndReject = function (e) {
+                self.logging.warning("Unable to load game");
+                self.setState(App.GameBoy.State.IDLE);
+                deferred.reject(e);
+            };
 
-  });
+            self.library.fetch(identifier).then(function (data) {
+                self._insertCartridge(identifier, data).then(function () {
+                    deferred.resolve();
+                }).fail(resetStateAndReject);
+            }).fail(resetStateAndReject);
+
+            return deferred.promise();
+        },
+
+        _insertCartridge: function (identifier, data) {
+            console.log('CART', identifier);
+            var self = this;
+            var deferred = $.Deferred();
+            self.identifier = identifier;
+            self.data = data;
+            startWrapper(identifier, document.getElementById("LCD"), data).then(function () {
+                setTimeout(function () {
+                    self.setState(App.GameBoy.State.RUNNING);
+                    console.log("SET STATE RUNNING SUCCESS");
+                    deferred.resolve();
+                }, 100);
+            }).fail(function (e) {
+                deferred.reject(e);
+            });
+            return deferred.promise();
+        }
+
+    });
 
 })(jQuery);
