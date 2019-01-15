@@ -170,7 +170,7 @@ function startWrapper(identifier, canvas, ROM) {
         },
 
         setSoundEnabled: function (enabled) {
-            alert(enabled);
+//            alert(enabled);
             var self = this;
             if (enabled === true) {
                 if (!Mixer) {
