@@ -170,8 +170,12 @@ function startWrapper(identifier, canvas, ROM) {
         },
 
         setSoundEnabled: function (enabled) {
+            alert(enabled);
             var self = this;
             if (enabled === true) {
+                if (!Mixer) {
+                    registerAudioHandler();
+                }
                 settings[App.GameBoy.Settings.ENABLE_SOUND] = true;
                 if (Iodine) {
                     Iodine.enableAudio();

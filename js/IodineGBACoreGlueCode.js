@@ -27,7 +27,7 @@ window.onload = function () {
     //Initialize the graphics:
     registerBlitterHandler();
     //Initialize the audio:
-    registerAudioHandler();
+//    registerAudioHandler();
     //Register the save handler callbacks:
     registerSaveHandlers();
     //Hook the GUI controls.
