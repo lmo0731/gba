@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# 2019-01-16 02:39:06.205352
+# 2019-01-16 03:14:06.205352
 CACHE:
 index.html
 gameplaycolor/css/menu.css
@@ -18,7 +18,7 @@ gameplaycolor/css/devices/iphone6-plus-landscape.css
 gameplaycolor/css/devices/ipad-portrait.css
 gameplaycolor/css/devices/ipad-landscape.css
 gameplaycolor/images/icon-large.png
-gameplaycolor/icons/icon.png
+gameplaycolor/images/icon.png
 gameplaycolor/images/drive.png
 gameplaycolor/defaults/apple-touch-startup-image-1536x2008.png
 gameplaycolor/defaults/apple-touch-startup-image-1242x2148.png

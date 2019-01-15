@@ -5,7 +5,7 @@ var config = {
     "analytics": "UA-37991248-2",
     "domain": "gameplaycolor.com",
     "redirect_uri": "https://gameplaycolor.com/app/",
-    "icon": "icons/icon.png",
+    "icon": "gameplaycolor/images/icon.png",
     "debug": false,
     "logging_level": 20,
     "deploy": {
