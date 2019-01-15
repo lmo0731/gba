@@ -208,6 +208,7 @@ Promise.prototype.always = function(onAlways) {
           self.console.show().then(function() {
             resolve();
           }, function(error) {
+              alert("Unable to show console\n" + error);
             reject(error);
           });
         }).fail(function(e) {

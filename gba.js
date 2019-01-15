@@ -103,12 +103,11 @@ function findValue(key) {
 }
 
 
-gbaOnload(document.getElementById('LCD'));
-
-function startWrapper(identifier, ROM) {
+function startWrapper(identifier, canvas, ROM) {
   var deferred = jQuery.Deferred();
   loadSaveStateContext("game-" + identifier).then(function() {
     try {
+      gbaOnload(canvas);
       downloadFile("gba_bios.bin", registerBIOS);
       console.log("REGISTER BIOS SUCCESS");
       var byteNumbers = new Array(ROM.length);
@@ -179,6 +178,7 @@ function startWrapper(identifier, ROM) {
     },
 
     setSoundEnabled: function(enabled) {
+        console.log('SOUND', enabled);
       var self = this;
       if (enabled === true) {
         settings[App.GameBoy.Settings.ENABLE_SOUND] = true;
@@ -194,6 +194,7 @@ function startWrapper(identifier, ROM) {
     },
 
     setSpeed: function(speed) {
+        console.log('SPEED', enabled);
       var self = this;
       self.speed = speed;
       if (IodineGUI.Iodine){
@@ -202,11 +203,13 @@ function startWrapper(identifier, ROM) {
     },
 
     onStateChange: function(callback) {
+        console.log('STATE CHANGED', self.state);
       var self = this;
       self.stateChangeCallbacks.push(callback);
     },
 
     setState: function(state) {
+        console.log('STATE', state);
       var self = this;
       if (self.state !== state) {
         self.state = state;
@@ -220,6 +223,8 @@ function startWrapper(identifier, ROM) {
     },
 
     pause: function() {
+        throw new Error();
+        console.log('PAUSE');
       var self = this;
       if (IodineGUI.Iodine){
         IodineGUI.Iodine.pause();
@@ -227,6 +232,7 @@ function startWrapper(identifier, ROM) {
     },
 
     run: function() {
+        console.log('PLAY');
       var self = this;
       // Do not attempt to run unless we have been in the running state.
       if (self.state === App.GameBoy.State.RUNNING) {
@@ -237,22 +243,26 @@ function startWrapper(identifier, ROM) {
     },
 
     keyDown: function(keycode) {
+        console.log('KEYDOWN', keycode);
       var self = this;
-      alert(JSON.stringify({keycode: keycode, event: 'keyDown'}));
+//      alert(JSON.stringify({keycode: keycode, event: 'keyDown'}));
       if (IodineGUI.Iodine){
         IodineGUI.Iodine.keyDown(keycode);
       }
     },
 
     keyUp: function(keycode) {
+        console.log('KEYUP', keycode);
       var self = this;
-      alert(JSON.stringify({keycode: keycode, event: 'keyUp'}));
+//      alert(JSON.stringify({keycode: keycode, event: 'keyUp'}));
       if (IodineGUI.Iodine){
         IodineGUI.Iodine.keyUp(keycode);
       }
     },
 
     clear: function() {
+        
+        console.log('CLEAR');
       var self = this;
 //      clearLastEmulation();
       
@@ -261,14 +271,19 @@ function startWrapper(identifier, ROM) {
     },
 
     reset: function() {
+        console.log('RESET');
       var self = this;
       return self._insertCartridge(self.identifier, self.data);
     },
 
     save: function(){
+        
+        console.log('SAVE');
     },
 
     load: function(identifier) {
+        
+        console.log('LOAD', identifier);
       var self = this;
       var deferred = $.Deferred();
 
@@ -288,11 +303,12 @@ function startWrapper(identifier, ROM) {
     },
 
     _insertCartridge: function(identifier, data) {
+        console.log('CART', identifier);
       var self = this;
       var deferred = $.Deferred();
       self.identifier = identifier;
       self.data = data;
-      startWrapper(identifier, data).then(function() {
+      startWrapper(identifier, document.getElementById("LCD"), data).then(function() {
         setTimeout(function() {
           self.setState(App.GameBoy.State.RUNNING);
           console.log("SET STATE RUNNING SUCCESS");

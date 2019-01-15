@@ -76,7 +76,7 @@ var IodineGUI = {
 
 var gbaOnload = function(canvas) {
     //Populate settings:
-    // registerDefaultSettings();
+     registerDefaultSettings();
     //Initialize Iodine:
     registerIodineHandler();
     //Initialize the timer:
@@ -88,9 +88,9 @@ var gbaOnload = function(canvas) {
     //Register the save handler callbacks:
     registerSaveHandlers();
     //Register the GUI controls.
-//    registerGUIEvents();
+    registerGUIEvents();
     //Register GUI settings.
-//    registerGUISettings();
+    registerGUISettings();
 }
 
 function registerIodineHandler() {
@@ -139,10 +139,10 @@ function registerBlitterHandler(canvas) {
     IodineGUI.Blitter.attachCanvas(canvas);
     IodineGUI.Iodine.attachGraphicsFrameHandler(IodineGUI.Blitter);
     IodineGUI.Blitter.attachGfxPostCallback(function() {
-        if (IodineGUI.currentSpeed[0]) {
-            var speedDOM = document.getElementById("speed");
-            speedDOM.textContent = "Speed: " + IodineGUI.currentSpeed[1] + "%";
-        }
+//        if (IodineGUI.currentSpeed[0]) {
+//            var speedDOM = document.getElementById("speed");
+//            speedDOM.textContent = "Speed: " + IodineGUI.currentSpeed[1] + "%";
+//        }
     });
 }
 function registerAudioHandler() {
