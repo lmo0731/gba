@@ -241,7 +241,7 @@ function startWrapper(identifier, canvas, ROM) {
 //            if (gba) {
 //                gba.setSpeed(speed);
 //            }
-            alert('Speed feature not supported');
+//            alert('Speed feature not supported');
         },
 
         onStateChange: function (callback) {
