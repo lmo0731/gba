@@ -49,61 +49,22 @@
 
         <script type="text/javascript" src="gameplaycolor/js/jquery-1.8.2.min.js"></script>
 
-        <script src="IodineGBA/includes/TypedArrayShim.js"></script>
-        <script src="IodineGBA/core/Cartridge.js"></script>
-        <script src="IodineGBA/core/DMA.js"></script>
-        <script src="IodineGBA/core/Emulator.js"></script>
-        <script src="IodineGBA/core/Graphics.js"></script>
-        <script src="IodineGBA/core/RunLoop.js"></script>
-        <script src="IodineGBA/core/Memory.js"></script>
-        <script src="IodineGBA/core/IRQ.js"></script>
-        <script src="IodineGBA/core/JoyPad.js"></script>
-        <script src="IodineGBA/core/Serial.js"></script>
-        <script src="IodineGBA/core/Sound.js"></script>
-        <script src="IodineGBA/core/Timer.js"></script>
-        <script src="IodineGBA/core/Wait.js"></script>
-        <script src="IodineGBA/core/CPU.js"></script>
-        <script src="IodineGBA/core/Saves.js"></script>
-        <script src="IodineGBA/core/sound/FIFO.js"></script>
-        <script src="IodineGBA/core/sound/Channel1.js"></script>
-        <script src="IodineGBA/core/sound/Channel2.js"></script>
-        <script src="IodineGBA/core/sound/Channel3.js"></script>
-        <script src="IodineGBA/core/sound/Channel4.js"></script>
-        <script src="IodineGBA/core/CPU/ARM.js"></script>
-        <script src="IodineGBA/core/CPU/THUMB.js"></script>
-        <script src="IodineGBA/core/CPU/CPSR.js"></script>
-        <script src="IodineGBA/core/graphics/Renderer.js"></script>
-        <script src="IodineGBA/core/graphics/RendererProxy.js"></script>
-        <script src="IodineGBA/core/graphics/BGTEXT.js"></script>
-        <script src="IodineGBA/core/graphics/BG2FrameBuffer.js"></script>
-        <script src="IodineGBA/core/graphics/BGMatrix.js"></script>
-        <script src="IodineGBA/core/graphics/AffineBG.js"></script>
-        <script src="IodineGBA/core/graphics/ColorEffects.js"></script>
-        <script src="IodineGBA/core/graphics/Mosaic.js"></script>
-        <script src="IodineGBA/core/graphics/OBJ.js"></script>
-        <script src="IodineGBA/core/graphics/OBJWindow.js"></script>
-        <script src="IodineGBA/core/graphics/Window.js"></script>
-        <script src="IodineGBA/core/graphics/Compositor.js"></script>
-        <script src="IodineGBA/core/memory/DMA0.js"></script>
-        <script src="IodineGBA/core/memory/DMA1.js"></script>
-        <script src="IodineGBA/core/memory/DMA2.js"></script>
-        <script src="IodineGBA/core/memory/DMA3.js"></script>
-        <script src="IodineGBA/core/cartridge/SaveDeterminer.js"></script>
-        <script src="IodineGBA/core/cartridge/SRAM.js"></script>
-        <script src="IodineGBA/core/cartridge/FLASH.js"></script>
-        <script src="IodineGBA/core/cartridge/EEPROM.js"></script>
-
-        <script src="js/XAudioJS/swfobject.js"></script>
-        <script src="js/XAudioJS/resampler.js"></script>
-        <script src="js/XAudioJS/XAudioServer.js"></script>
-
-        <!--Add your webpage scripts below-->
-        <script src="js/IodineGBAROMLoadGlueCode.js"></script>
-        <script src="js/IodineGBAJoyPadGlueCode.js"></script>
-        <script src="js/IodineGBASavesGlueCode.js"></script>
-        <script src="js/IodineGBAGraphicsGlueCode.js"></script>
-        <script src="js/IodineGBAAudioGlueCode.js"></script>
-        <script src="js/IodineGBACoreGlueCode.js"></script>
+        <script src="gbajs/core.js"></script>
+        <script src="gbajs/util.js"></script>
+        <script src="gbajs/arm.js"></script>
+        <script src="gbajs/thumb.js"></script>
+        <script src="gbajs/mmu.js"></script>
+        <script src="gbajs/io.js"></script>
+        <script src="gbajs/audio.js"></script>
+        <script src="gbajs/video.js"></script>
+        <script src="gbajs/video/proxy.js"></script>
+        <script src="gbajs/video/software.js"></script>
+        <script src="gbajs/irq.js"></script>
+        <script src="gbajs/keypad.js"></script>
+        <script src="gbajs/sio.js"></script>
+        <script src="gbajs/savedata.js"></script>
+        <script src="gbajs/gpio.js"></script>
+        <script src="gbajs/gba.js"></script>
 
         <script type="text/javascript" src="config.js"></script>
         <script type="text/javascript" src="gameplaycolor/js/spin.min.js"></script>
@@ -122,7 +83,7 @@
         <script type="text/javascript" src="gameplaycolor/js/switch.js"></script>
         <script type="text/javascript" src="gameplaycolor/js/segmented.js"></script>
         <script type="text/javascript" src="gameplaycolor/js/scroll.js"></script>
-        <script type="text/javascript" src="gba.js"></script>
+        <script type="text/javascript" src="gbajs.js"></script>
         <script type="text/javascript" src="gameplaycolor/js/grid.js"></script>
         <script type="text/javascript" src="gameplaycolor/js/store.js"></script>
         <script type="text/javascript" src="gameplaycolor/js/touchlistener.js"></script>
@@ -132,7 +93,7 @@
 
 
 
-        <title>Game Play</title>
+        <title>Game Play Advance</title>
     </head>
     <body style="background-color: black;">
 
@@ -243,7 +204,7 @@
 
                     <div id="element-screen">
                         <div id="display">
-                            <canvas id="LCD" class="display" width="160" height="120"></canvas>
+                            <canvas id="LCD" class="display" width="240" height="160"></canvas>
                             <div id="LCD-dropshadow"></div>
                         </div>
                     </div>
@@ -252,7 +213,12 @@
                         <div id="button-library" class="navigation-button button-back button-library">Library</div>
                         <div id="button-game" class="navigation-button button-library button-right">Game</div>
                     </div>
-
+                    <div id="element-lr">
+                        <div id="group-lr">
+                            <div id="control-l" class="buttontop"><div class="control-text">L</div></div>
+                            <div id="control-r" class="buttontop"><div class="control-text">R</div></div>
+                        </div>
+                    </div>
                     <div id="element-dpad">
                         <div id="dpad-touch-target" class="dpad-touch-target">
                             <div id="dpad" class="dpad">
@@ -276,82 +242,83 @@
                             </div>
                         </div>
                     </div>
-                    <div id="element-buttons">
-                        <div id="group-buttons">
-                            <div id="control-a" class="button"><div class="control-text">A</div></div>
-                            <div id="control-b" class="button"><div class="control-text">B</div></div>
-                        </div>
+                </div>
+                <div id="element-buttons">
+                    <div id="group-buttons">
+                        <div id="control-a" class="button"><div class="control-text">A</div></div>
+                        <div id="control-b" class="button"><div class="control-text">B</div></div>
                     </div>
-                </div><!-- screen-console -->
-            </div><!-- screen-console-container -->
-
-            <div id="screen-menu" class="screen screen-menu hidden" style="display: none;">
-                <div id="game-menu" class="menu hidden" style="display: none">
-                    <ul>
-                        <li id="menu-button-a-b-start-select">A + B + Start + Select</li>
-                        <li id="menu-button-reset">Reset</li>
-                    </ul>
-                    <ul>
-                        <li id="menu-button-cancel" class="default">Cancel</li>
-                    </ul>
                 </div>
-            </div><!-- screen-menu -->
+            </div><!-- screen-console -->
+        </div><!-- screen-console-container -->
 
-            <div id="screen-sound" class="screen screen-sound hidden" style="display: none;">
-                <div id="screen-sound-menu" class="menu menu-short hidden" style="display: none">
-                    <ul>
-                        <li id="screen-sound-menu-button-enable-sound">Enable Sound</li>
-                    </ul>
-                    <ul>
-                        <li id="screen-sound-menu-button-cancel" class="default">Cancel</li>
-                    </ul>
-                </div>
-            </div><!-- screen-sound -->
+        <div id="screen-menu" class="screen screen-menu hidden" style="display: none;">
+            <div id="game-menu" class="menu hidden" style="display: none">
+                <ul>
+                    <li id="menu-button-a-b-start-select">A + B + Start + Select</li>
+                    <li id="menu-button-reset">Reset</li>
+                </ul>
+                <ul>
+                    <li id="menu-button-cancel" class="default">Cancel</li>
+                </ul>
+            </div>
+        </div><!-- screen-menu -->
 
-            <div id="DEBUG" style="display: none"></div>
-            <div id="DEBUGGER"></div>
+        <div id="screen-sound" class="screen screen-sound hidden" style="display: none;">
+            <div id="screen-sound-menu" class="menu menu-short hidden" style="display: none">
+                <ul>
+                    <li id="screen-sound-menu-button-enable-sound">Enable Sound</li>
+                </ul>
+                <ul>
+                    <li id="screen-sound-menu-button-cancel" class="default">Cancel</li>
+                </ul>
+            </div>
+        </div><!-- screen-sound -->
 
+        <div id="DEBUG" style="display: none"></div>
+        <div id="DEBUGGER"></div>
+
+    </div>
+    <div id="screen-splash" class="screen-splash"></div>
+    <div id="screen-instructions" class="screen-instructions" style="display: none">
+        <div class="placeholder">
+            <div class="appicon"></div>
+            <h1>Game Play Color</h1>
+            <ol class="install-instructions">
+                <li>Open in Mobile Safari on your iPhone or iPad</li>
+                <li>Tap the 'Share' button</li>
+                <li>Choose 'Add to Home Screen'</li>
+            </ol>
         </div>
-        <div id="screen-splash" class="screen-splash"></div>
-        <div id="screen-instructions" class="screen-instructions" style="display: none">
-            <div class="placeholder">
-                <div class="appicon"></div>
-                <h1>Game Play Color</h1>
-                <ol class="install-instructions">
-                    <li>Open in Mobile Safari on your iPhone or iPad</li>
-                    <li>Tap the 'Share' button</li>
-                    <li>Choose 'Add to Home Screen'</li>
-                </ol>
+    </div>
+
+    <div id="screen-account" class="screen-instructions" style="display: none">
+        <div class="placeholder-small">
+            <div class="appicon"></div>
+            <h1 class="apptitle">Game Play Color</h1>
+            <div class="instructions">
+                <p>
+                    <a class="simple-button sign-in-button" id="google-drive-auth" href="" target="_blank">Sign In</a>
+                </p>
+                <hr>
+                Enter access code:<br>
+                <input id="redeem-code" class="input-code" type="text"></input><br>
+                <div class="simple-button" id="button-redeem">Continue</div>
             </div>
         </div>
+    </div>
 
-        <div id="screen-account" class="screen-instructions" style="display: none">
-            <div class="placeholder-small">
-                <div class="appicon"></div>
-                <h1 class="apptitle">Game Play Color</h1>
-                <div class="instructions">
-                    <p>
-                        <a class="simple-button sign-in-button" id="google-drive-auth" href="" target="_blank">Sign In</a>
-                    </p>
-                    <hr>
-                    Enter access code:<br>
-                    <input id="redeem-code" class="input-code" type="text"></input><br>
-                    <div class="simple-button" id="button-redeem">Continue</div>
-                </div>
-            </div>
+    <div id="screen-authorizing" class="screen-instructions" style="display: none">
+        <div class="placeholder">
+            <div class="appicon"></div>
+            <p>Copy and paste the access code into <strong>Game Play Color</strong> then click <strong>Continue</strong>.</p>
+            <textarea readonly="yes" rows="6" id="authorization-code" class="authorization-code" type="text" onFocus="this.selectionStart = 0;
+                    this.selectionEnd = this.value.length;" onTouchEnd="this.selectionStart=0; this.selectionEnd=this.value.length;" onMouseUp="return false" ></textarea>
         </div>
+    </div>
 
-        <div id="screen-authorizing" class="screen-instructions" style="display: none">
-            <div class="placeholder">
-                <div class="appicon"></div>
-                <p>Copy and paste the access code into <strong>Game Play Color</strong> then click <strong>Continue</strong>.</p>
-                <textarea readonly="yes" rows="6" id="authorization-code" class="authorization-code" type="text" onFocus="this.selectionStart = 0;
-                        this.selectionEnd = this.value.length;" onTouchEnd="this.selectionStart=0; this.selectionEnd=this.value.length;" onMouseUp="return false" ></textarea>
-            </div>
-        </div>
-
-        <audio id="silent">
-            <source src="gameplaycolor/assets/silent.mp3" type="audio/mpeg">
-        </audio>
-    </body>
+    <audio id="silent">
+        <source src="gameplaycolor/assets/silent.mp3" type="audio/mpeg">
+    </audio>
+</body>
 </html>

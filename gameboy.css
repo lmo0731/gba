@@ -148,6 +148,25 @@ body {
     border-top: 1px solid black;
 }
 
+.buttontop {
+    width: 60px;
+    height: 40px;
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: #4a4a4a;
+    display: block;
+    background-color: #f7f7f7;
+    background-image: -webkit-linear-gradient(top, #262626, #000000);
+    color: #000000;
+    text-shadow: #313131 0px 1px;
+    position: relative;
+    text-align: center;
+    font-size: 34px;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.35), inset 0 1px #676767;
+    border: 2px solid black;
+    border-top: 1px solid black;
+}
+
 .button-option-group {
     width: 60px;
 }
@@ -214,6 +233,38 @@ body {
     position: absolute;
     top: 5px;
     right: 3px;
+}
+
+#element-lr {
+    width: 100%;
+    position: absolute;
+    bottom: 330px;
+}
+
+#group-lr {
+    position: relative;
+    bottom: 0;
+}
+
+#group-lr .control-text {
+    font-size: 20px;
+}
+
+#control-l {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    left: 0;
+    position: absolute;
+    border-left: 0;
+}
+
+#control-r {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    right: 0;
+    position: absolute;
+    border-right: 0;
+
 }
 
 #control-b {
@@ -799,7 +850,7 @@ hr {
     position: absolute;
     width: 40px;
     height: 40px;
-    background-color: blue;
+    background-color: black;
     border: 2px solid black;
     border-top: 1px solid black;
 }

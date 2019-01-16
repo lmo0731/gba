@@ -18,9 +18,11 @@
 
 KEYCODE_A = 65;
 KEYCODE_S = 83;
+KEYCODE_Z = 90;
+KEYCODE_X = 88;
 KEYCODE_RETURN = 13;
 KEYCODE_SHIFT_LEFT = 16;
-
+KEYCODE_BACKSLASH = 220;
 (function($) {
 
   App.Console = function(device, gameBoy, events, store) {
@@ -72,10 +74,12 @@ KEYCODE_SHIFT_LEFT = 16;
         });
         self.pad.animate = false;
 
-        self.button_a = self.configureButton($('#control-a'), Gameboy.Key.A, KEYCODE_A);
-        self.button_b = self.configureButton($('#control-b'), Gameboy.Key.B, KEYCODE_S);
+        self.button_a = self.configureButton($('#control-a'), Gameboy.Key.A, KEYCODE_Z);
+        self.button_b = self.configureButton($('#control-b'), Gameboy.Key.B, KEYCODE_X);
+        self.button_l = self.configureButton($('#control-l'), Gameboy.Key.L, KEYCODE_A);
+        self.button_r = self.configureButton($('#control-r'), Gameboy.Key.R, KEYCODE_S);
         self.button_start = self.configureButton($('#control-start'), Gameboy.Key.START, KEYCODE_RETURN);
-        self.button_select = self.configureButton($('#control-select'), Gameboy.Key.SELECT, KEYCODE_SHIFT_LEFT);
+        self.button_select = self.configureButton($('#control-select'), Gameboy.Key.SELECT, KEYCODE_BACKSLASH);
 
         // Navigation.
 
