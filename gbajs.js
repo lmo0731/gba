@@ -20,7 +20,8 @@ var gba;
 var runCommands = [];
 var debug = null;
 
-initGBA = function(){
+initGBA = function () {
+    console.log('INIT');
     try {
         gba = new GameBoyAdvance();
         gba.keypad.eatInput = true;
@@ -151,7 +152,7 @@ function startWrapper(identifier, canvas, ROM) {
     var deferred = jQuery.Deferred();
     loadSaveStateContext("game-" + identifier).then(function () {
         try {
-            if (!gba){
+            if (!gba) {
                 initGBA();
             }
             gba.setCanvas(canvas);
@@ -222,23 +223,25 @@ function startWrapper(identifier, canvas, ROM) {
         },
 
         setSoundEnabled: function (enabled) {
-//            alert(enabled);
+            console.log('SOUND', enabled);
             var self = this;
+            if (gba) {
+                gba.audio.masterEnable = enabled;
+            }
             if (enabled === true) {
-
                 settings[App.GameBoy.Settings.ENABLE_SOUND] = true;
             } else {
                 settings[App.GameBoy.Settings.ENABLE_SOUND] = false;
-
             }
         },
 
         setSpeed: function (speed) {
             var self = this;
             self.speed = speed;
-            if (gba) {
-                gba.setSpeed(speed);
-            }
+//            if (gba) {
+//                gba.setSpeed(speed);
+//            }
+            alert('Speed feature not supported');
         },
 
         onStateChange: function (callback) {
