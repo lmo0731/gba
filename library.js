@@ -342,7 +342,7 @@
 
           self.drive.downloadFile(file).then(function(data) {
 
-            self.store.setProperty(App.Controller.Domain.GAMES, identifier, utilities.btoa(data));
+            self.store.setProperty(App.Controller.Domain.GAMES, identifier, data);
             delete self.fetches[identifier];
             deferred.resolve(data);
 
@@ -355,7 +355,7 @@
         } else {
           self.logging.info("Using locally stored game for '" + identifier + "' with length " + data.length);
           delete self.fetches[identifier];
-          deferred.resolve(utilities.atob(data));
+          deferred.resolve(data);
         }
       });
 

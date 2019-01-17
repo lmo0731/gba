@@ -237,6 +237,7 @@ GameBoyAdvanceAudio.prototype.writeEnable = function (value) {
             this.context = new XAudioServer(2, this.sampleRate, 0, this.sampleRate, null, 1, function () {
                 this.log('AUDIO FAIL');
             });
+            this.log('AUDIO TYPE: '+this.context.audioType);
         }
     }
 };
