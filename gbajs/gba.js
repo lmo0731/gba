@@ -324,7 +324,7 @@ GameBoyAdvance.prototype.downloadSavedata = function () {
 
 GameBoyAdvance.prototype.storeSavedata = function () {
     var sram = this.mmu.save;
-    console.log('SAVEDATA');
+    this.log('SAVEDATA');
     try {
         var storage = window.localStorage;
         storage[this.SYS_ID + '.' + this.mmu.cart.code] = this.encodeBase64(sram.view);
@@ -334,7 +334,7 @@ GameBoyAdvance.prototype.storeSavedata = function () {
 };
 
 GameBoyAdvance.prototype.retrieveSavedata = function () {
-    console.log('LOADDATA');
+    this.log('LOADDATA');
     try {
         var storage = window.localStorage;
         var data = storage[this.SYS_ID + '.' + this.mmu.cart.code];
@@ -372,6 +372,7 @@ GameBoyAdvance.prototype.log = function (level, message) {};
 
 GameBoyAdvance.prototype.setLogger = function (logger) {
     this.log = logger;
+    this.audio.log = this.log;
 };
 
 GameBoyAdvance.prototype.logStackTrace = function (stack) {

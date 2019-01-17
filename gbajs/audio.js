@@ -11,11 +11,12 @@ function GameBoyAdvanceAudio() {
     this.SOUND_MAX = 0x400;
     this.FIFO_MAX = 0x200;
     this.PSG_MAX = 0x080;
+    this.log = console.log
 }
 ;
 
 GameBoyAdvanceAudio.prototype.clear = function () {
-    console.log('CLEAR AUDIO');
+    this.log('CLEAR AUDIO');
     this.fifoA = [];
     this.fifoB = [];
     this.fifoASample = 0;
@@ -224,7 +225,7 @@ GameBoyAdvanceAudio.prototype.updateTimers = function () {
 };
 
 GameBoyAdvanceAudio.prototype.writeEnable = function (value) {
-    console.log('SOUND ENABLE', value);
+    this.log('SOUND ENABLE: '+ value);
     this.enabled = !!value;
     this.nextEvent = this.cpu.cycles;
     this.nextSample = this.nextEvent;
@@ -232,7 +233,7 @@ GameBoyAdvanceAudio.prototype.writeEnable = function (value) {
     this.core.irq.pollNextEvent();
     if (value) {
         this.context = new XAudioServer(2, this.sampleRate, 0, this.sampleRate, null, 1, function () {
-            console.log('AUDIO FAIL');
+            this.log('AUDIO FAIL');
         });
     } else {
         this.context = null;
@@ -691,7 +692,7 @@ GameBoyAdvanceAudio.prototype.sample = function () {
         this.buffers[0][samplePointer] = sampleLeft;
         this.buffers[1][samplePointer] = sampleRight;
         if (this.masterEnable && this.context && this.samplePointer === this.sampleMask) {
-//        console.log(this.buffers);
+//        this.log(this.buffers);
             var buf = [];
             for (var i = 0; i < this.buffers[0].length; i++) {
                 buf.push(this.buffers[0][i]);

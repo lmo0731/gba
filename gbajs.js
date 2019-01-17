@@ -21,20 +21,14 @@ var runCommands = [];
 var debug = null;
 
 initGBA = function () {
-    console.log('INIT');
+    cout('INIT');
     try {
         gba = new GameBoyAdvance();
         gba.keypad.eatInput = true;
         gba.audio.masterEnable = false;
-        gba.setLogger(function (level, error) {
-            console.log(error);
-            gba.pause();
-        });
-//        gba.reportFPS = function(a){
-//            console.log(a);
-//        };
+        gba.setLogger(cout);
     } catch (e) {
-        console.log(e);
+        cout(e);
         gba = null;
     }
 }
@@ -227,7 +221,7 @@ function startWrapper(identifier, canvas, ROM) {
         },
 
         setSoundEnabled: function (enabled) {
-            console.log('SOUND', enabled);
+            cout('SOUND: '+ enabled);
             var self = this;
             if (gba) {
                 gba.audio.masterEnable = enabled;
