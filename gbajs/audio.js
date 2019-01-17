@@ -1,5 +1,5 @@
 function GameBoyAdvanceAudio() {
-
+    
     var self = this;
     this.bufferSize = 0;
     this.bufferSize = 1024;
@@ -11,7 +11,7 @@ function GameBoyAdvanceAudio() {
     this.SOUND_MAX = 0x400;
     this.FIFO_MAX = 0x200;
     this.PSG_MAX = 0x080;
-    this.log = console.log
+    this.log = console.log;
 }
 ;
 
@@ -225,19 +225,19 @@ GameBoyAdvanceAudio.prototype.updateTimers = function () {
 };
 
 GameBoyAdvanceAudio.prototype.writeEnable = function (value) {
-    this.log('SOUND ENABLE: '+ value);
+    this.log('SOUND ENABLE: ' + value);
     this.enabled = !!value;
     this.nextEvent = this.cpu.cycles;
     this.nextSample = this.nextEvent;
     this.updateTimers();
     this.core.irq.pollNextEvent();
     if (value) {
-        this.context = new XAudioServer(2, this.sampleRate, 0, this.sampleRate, null, 1, function () {
-            this.log('AUDIO FAIL');
-        });
-    } else {
-        this.context = null;
-        //enable
+        if (!this.context) {
+            this.log("AUDIO INIT");
+            this.context = new XAudioServer(2, this.sampleRate, 0, this.sampleRate, null, 1, function () {
+                this.log('AUDIO FAIL');
+            });
+        }
     }
 };
 
