@@ -265,14 +265,15 @@
       var self = this;
       var identifier = self.identifierForIndex(index);
       var title = self.titleForIndex(index);
-      self.store.hasProperty(App.Controller.Domain.GAMES, identifier).then(function(found) {
-        if (found) {
+//      self.store.hasProperty(App.Controller.Domain.GAMES, identifier).then(function(found) {
+//        if (found) {
           if (confirm("Remove '" + title + "' from your device?")) {
             self.store.deleteProperty(App.Controller.Domain.GAMES, identifier);
+            self.store.deleteProperty(App.Controller.Domain.SETTINGS, App.Store.Property.GAME);
             element.addClass("unavailable");
           }
-        }
-      });
+//        }
+//      });
     },
     
     update: function() {
@@ -355,7 +356,12 @@
         } else {
           self.logging.info("Using locally stored game for '" + identifier + "' with length " + data.length);
           delete self.fetches[identifier];
-          deferred.resolve(utilities.atob(data));
+          try {
+            deferred.resolve(utilities.atob(data));
+          } catch (e){
+            self.store.deleteProperty(App.Controller.Domain.GAMES, identifier);
+            deferred.reject();
+          }
         }
       });
 

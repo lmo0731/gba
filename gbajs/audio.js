@@ -699,7 +699,7 @@ GameBoyAdvanceAudio.prototype.sample = function () {
                 buf.push(this.buffers[0][i]);
                 buf.push(this.buffers[1][i]);
             }
-            this.context.writeAudio(buf);
+            this.context.writeAudioNoCallback(buf);
         }
     }
     this.samplePointer = (samplePointer + 1) & this.sampleMask;

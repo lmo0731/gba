@@ -7,7 +7,7 @@ var config = {
     "redirect_uri": "https://gameplaycolor.com/app/",
     "icon": "gameplaycolor/images/icon.png",
     "debug": false,
-    "logging_level": 20,
+    "logging_level": 0,
     "deploy": {
         "domain": "app.gameplaycolor.com",
         "confirm": true
