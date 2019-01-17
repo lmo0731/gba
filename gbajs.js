@@ -25,10 +25,14 @@ initGBA = function () {
     try {
         gba = new GameBoyAdvance();
         gba.keypad.eatInput = true;
+        gba.audio.masterEnable = false;
         gba.setLogger(function (level, error) {
             console.log(error);
             gba.pause();
         });
+//        gba.reportFPS = function(a){
+//            console.log(a);
+//        };
     } catch (e) {
         console.log(e);
         gba = null;

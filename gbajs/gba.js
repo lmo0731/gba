@@ -85,7 +85,7 @@ GameBoyAdvance.prototype.setCanvas = function (canvas) {
         this.setCanvasDirect(this.indirectCanvas);
         var targetContext = canvas.getContext('2d');
         this.video.drawCallback = function () {
-            
+
             targetContext.drawImage(self.indirectCanvas, 0, 0, 240, 160);
 //            targetContext.drawImage(self.indirectCanvas, 0, 0, canvas.offsetWidth, canvas.offsetHeight);
         }
@@ -324,6 +324,7 @@ GameBoyAdvance.prototype.downloadSavedata = function () {
 
 GameBoyAdvance.prototype.storeSavedata = function () {
     var sram = this.mmu.save;
+    console.log('SAVEDATA');
     try {
         var storage = window.localStorage;
         storage[this.SYS_ID + '.' + this.mmu.cart.code] = this.encodeBase64(sram.view);
@@ -333,6 +334,7 @@ GameBoyAdvance.prototype.storeSavedata = function () {
 };
 
 GameBoyAdvance.prototype.retrieveSavedata = function () {
+    console.log('LOADDATA');
     try {
         var storage = window.localStorage;
         var data = storage[this.SYS_ID + '.' + this.mmu.cart.code];

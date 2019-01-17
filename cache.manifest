@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# 2019-01-16 15:45:06.205352
+# 2019-01-17 12:00:06.205352
 CACHE:
 index.html
 gameplaycolor/css/menu.css
@@ -57,7 +57,7 @@ gameplaycolor/js/button.js
 gameplaycolor/js/switch.js
 gameplaycolor/js/segmented.js
 gameplaycolor/js/scroll.js
-gba.js
+gbajs.js
 gameplaycolor/js/grid.js
 gameplaycolor/js/store.js
 gameplaycolor/js/touchlistener.js

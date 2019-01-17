@@ -805,7 +805,7 @@ GameBoyAdvanceMMU.prototype.saveNeedsFlush = function() {
     if (this.save){
 	return this.save.writePending;
     }
-    return true;
+    return false;
 };
 
 GameBoyAdvanceMMU.prototype.flushSave = function() {
