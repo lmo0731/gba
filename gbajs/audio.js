@@ -23,6 +23,9 @@ GameBoyAdvanceAudio.prototype.clear = function () {
     this.fifoBSample = 0;
 
     this.enabled = false;
+    if (this.context){
+        this.context.disconnect();
+    }
     this.context = null;
 
     this.enableChannel3 = false;
@@ -683,8 +686,8 @@ GameBoyAdvanceAudio.prototype.sample = function () {
     if (this.buffers) {
         this.buffers[0][samplePointer] = sampleLeft;
         this.buffers[1][samplePointer] = sampleRight;
-        if (this.masterEnable && this.samplePointer === this.sampleMask) {
-            if (!this.context) {
+        if (this.masterEnable && this.enable && this.samplePointer === this.sampleMask) {
+            if (!this.context ) {
                 this.log("AUDIO INIT");
                 this.context = new XAudioServer(2, this.sampleRate, 0, this.sampleRate, null, 1, function () {
                     this.log('AUDIO FAIL');
