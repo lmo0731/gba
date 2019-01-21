@@ -1,5 +1,5 @@
 function GameBoyAdvanceAudio() {
-    
+
     var self = this;
     this.bufferSize = 0;
     this.bufferSize = 1024;
@@ -231,15 +231,6 @@ GameBoyAdvanceAudio.prototype.writeEnable = function (value) {
     this.nextSample = this.nextEvent;
     this.updateTimers();
     this.core.irq.pollNextEvent();
-    if (value) {
-        if (!this.context) {
-            this.log("AUDIO INIT");
-            this.context = new XAudioServer(2, this.sampleRate, 0, this.sampleRate, null, 1, function () {
-                this.log('AUDIO FAIL');
-            });
-            this.log('AUDIO TYPE: '+this.context.audioType);
-        }
-    }
 };
 
 GameBoyAdvanceAudio.prototype.writeSoundControlLo = function (value) {
@@ -692,8 +683,14 @@ GameBoyAdvanceAudio.prototype.sample = function () {
     if (this.buffers) {
         this.buffers[0][samplePointer] = sampleLeft;
         this.buffers[1][samplePointer] = sampleRight;
-        if (this.masterEnable && this.context && this.samplePointer === this.sampleMask) {
-//        this.log(this.buffers);
+        if (this.masterEnable && this.samplePointer === this.sampleMask) {
+            if (!this.context) {
+                this.log("AUDIO INIT");
+                this.context = new XAudioServer(2, this.sampleRate, 0, this.sampleRate, null, 1, function () {
+                    this.log('AUDIO FAIL');
+                });
+                this.log('AUDIO TYPE: ' + this.context.audioType);
+            }
             var buf = [];
             for (var i = 0; i < this.buffers[0].length; i++) {
                 buf.push(this.buffers[0][i]);
